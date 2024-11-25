@@ -1,0 +1,71 @@
+<?php
+// Koneksi ke MySQL
+$conn = mysqli_connect("localhost", "root", "", "akademik");
+if (mysqli_connect_errno()) {
+    echo "Koneksi Gagal: " . mysqli_connect_error();
+    exit();
+}
+
+// Proses penyimpanan data jika form dikirimkan
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $vnpm = $_POST['txtnpm'];
+    $vnmmhs = $_POST['txtnm_mahasiswa'];
+    $vjk = $_POST['cbjk'];
+    $vkelas = $_POST['txtkelas'];
+    
+    $query = mysqli_query($conn, "INSERT INTO tb_mahasiswa (npm, nama, jns_kelamin, kelas) 
+                                  VALUES ('$vnpm', '$vnmmhs', '$vjk', '$vkelas')");
+    if ($query) {
+        echo "Input Data Sukses<br>";
+    } else {
+        echo "Input Data Gagal<br>";
+    }
+}
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Data Mahasiswa</title>
+</head>
+<body>
+    <>
+        <form method="post" action="">
+            <table width="400" border="1" bgcolor="silver">
+                <tr>
+                    <td colspan="2" align="center">INPUT DATA MAHASISWA</td>
+                </tr>
+                <tr>
+                    <td width="175">NPM</td>
+                    <td><input name="txtnpm" type="text" id="txtnpm" size="10" /></td>
+                </tr>
+                <tr>
+                    <td>NAMA</td>
+                    <td><input name="txtnm_mahasiswa" type="text" id="txtnm_mahasiswa" size="25" /></td>
+                </tr>
+                <tr>
+                    <td>JENIS KELAMIN</td>
+                    <td width="300">
+                        <select name="cbjk" id="cbjk">
+                            <option value="-">-</option>
+                            <option value="L">LAKI-LAKI</option>
+                            <option value="P">PEREMPUAN</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>KELAS</td>
+                    <td><input name="txtkelas" type="text" id="txtkelas" size="25" /></td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center">
+                        <input name="BtnSave" type="submit" id="BtnSave" value="Save" />
+                        <input name="BtnBatal" type="reset" id="BtnBatal" value="Cancel" />
+                    </td>
+                </tr>
+            </table>
+        </form>
+</body>
+</html>
+
+
